@@ -1,0 +1,6 @@
+<form  action="<%=@payment_vendor.hop_url(current_user)%>" method="post" >
+  <% @payment_vendor.generate_params.each_pair do |key, value| %>
+    <input type="hidden" name="<%=key%>" value="<%=value%>" >
+  <%end%>
+  <%= submit_tag "Complete Credit Card Payment", :class=>"btn btn-success btn-large" %>
+</form>

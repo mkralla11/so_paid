@@ -1,0 +1,59 @@
+PayMe.configure do |config|
+  config.add_payment_vendor 'cybersource', # Name of your payment vendor
+                            :vendor_options=>{ 
+                                    # The only options that need to be placed
+                                    # in this file are: 
+                                    
+                                    # secret_key, access_key, profile_id
+                                    
+                                    # All others will be passed/filled
+                                    # by the default-defaults or by the Order object
+                                    # you pass in at instantiation time.
+
+                                    # NOTE: 'live' and 'test' hashes ALWAYS
+                                    # trumps any 'defaults' which are outside
+                                    # of both of those hashes
+
+                                    :live=>{
+                                      :secret_key=>"your_key"
+                                      #...any other live options
+                                    },
+                                    :test=>{
+                                      :secret_key=>"your_key"
+                                      #...any other test options
+                                    },
+                                    #...any other DEFAULT options
+                                    :secret_key=>"",
+                                    :profile_id=>"",
+                                    :access_key=>"",
+                                    :transaction_uuid=>"",
+                                    :locale=>"en-US",
+                                    :transaction_type=>"sale",
+                                    :reference_number=>"",
+                                    :amount=>"",
+                                    :currency=>"USD",
+                                    :signed_date_time=>"",
+                                    :unsigned_field_names=>[],
+
+                                    :signed_field_names =>
+                                      [
+                                        :profile_id, 
+                                        :access_key, 
+                                        :transaction_uuid, 
+                                        :locale, 
+                                        :transaction_type, 
+                                        :reference_number,
+                                        :amount, 
+                                        :currency, 
+                                        :signed_date_time,
+                                        :unsigned_field_names, 
+                                        :signed_field_names
+                                      ],
+
+                            # config options
+                            # if mode 
+                            :config_options=>{
+                              :test_user_email=>"payment_tester@gmail.com",
+                              :test_mode=>false
+                            }
+end
