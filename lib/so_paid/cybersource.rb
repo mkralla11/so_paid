@@ -94,10 +94,19 @@ module SoPaid
 
 
     def set_order_specific_params
-      @pv_order_params[:amount] = @order.amount_cents           if @pv_order_params[:amount].blank?
-      @pv_order_params[:reference_number] = @order.id.to_s      if @pv_order_params[:reference_number].blank?
-      @pv_order_params[:transaction_uuid] = uniq_app_order_id   if @pv_order_params[:transaction_uuid].blank?
-      @pv_order_params[:signed_date_time] = get_isotime         if @pv_order_params[:signed_date_time].blank?
+      o_specific = { :amount=>"amount_cents", :reference_number=>"id", :transaction_uuid=>"uniq_app_order_id" }
+      
+      o_specific.each_pair do |key, method|
+        if @pv_order_params[key].present?
+          next
+        elsif @order.respond_to? method
+          @pv_order_params[key] = @order.send(method.to_sym)
+        else
+          raise "No key/value pair given for order specific key '#{key.to_s}'. You must manually pass this pair in the opt_hash when calling SoPaid.vendor.new(order_obj, opt_hash, config_hash) or define a method/alias '#{method}' in your order_obj '#{@order.class.to_s}' model/class."
+        end
+      end
+
+      @pv_order_params[:signed_date_time] = get_isotime if @pv_order_params[:signed_date_time].blank?
     end
 
 
@@ -116,12 +125,6 @@ module SoPaid
 
       encode_hop(data, @pv_order_params[:secret_key])
     end
-
-
-    def uniq_app_order_id
-       @pv_order_params[:profile_id] + "_" + @order.id.to_s
-    end
-
 
 
     def test?
