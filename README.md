@@ -1,6 +1,6 @@
 # PayMe
 
-TODO: Write a gem description
+A no-nonsense, fully configurable Rails credit card/payment vendor gem.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+See examples folder for instructions and copy/pastable files. More will be added here when time is available (...rare).
 
 ## Contributing
 

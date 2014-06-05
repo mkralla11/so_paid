@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "pay_me"
   spec.version       = PayMe::VERSION
   spec.authors       = ["mkralla11"]
-  spec.email         = ["Mike.MKrallaProductions@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.email         = ["mike.mkrallaproductions@gmail.com"]
+  spec.description   = %q{A no-nonsense, fully configurable Rails credit card/payment vendor gem.}
+  spec.summary       = %q{There was a need to consolidate all credit card processing vendors for our web apps, but configuration needed to be at the forefront of the consolidated gem. So I built PayMe which allows for easy extension, and a generous amount of options...and should work out of the box, if you're the plug-and-play type. Examine how the code is written to see how easy it is to extend and make your own payment_vendor class that inherits from Hop.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
