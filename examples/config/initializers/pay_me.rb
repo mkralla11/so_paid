@@ -15,11 +15,13 @@ PayMe.configure do |config|
                                     # of both of those hashes
 
                                     :live=>{
-                                      :secret_key=>"your_key"
+                                      :secret_key=>"your_key",
+                                      :access_key=>"your_key"
                                       #...any other live options
                                     },
                                     :test=>{
-                                      :secret_key=>"your_key"
+                                      :secret_key=>"your_key",
+                                      :access_key=>"your_key"
                                       #...any other test options
                                     },
                                     #...any other DEFAULT options
@@ -34,6 +36,12 @@ PayMe.configure do |config|
                                     :currency=>"USD",
                                     :signed_date_time=>"",
                                     :unsigned_field_names=>[],
+                                    # IMPORTANT: if you want to add,
+                                    # any :unsigned_field_names, make sure
+                                    # you add them to both within the
+                                    # :unsigned_field_names array AND
+                                    # as a key value pair within this hash,
+                                    # used signed_field_names as an example
 
                                     :signed_field_names =>
                                       [

@@ -6,10 +6,8 @@ module PayMe
   
     @@pv_defaults = {
       :live=>{
-        :secret_key=>"wrong but available"
       },
       :test=>{
-        :amount=>"wrong but available"
       },
       :secret_key=>"",
       :profile_id=>"",
@@ -141,43 +139,5 @@ module PayMe
     def live_hop_url
       "https://secureacceptance.cybersource.com/pay"
     end
-
-
-  # ######## UNUSED BELOW #############
-
-
-  #   def get_merchant_urls
-  #     urls = '<input type="hidden" name="orderPage_merchantURLPostAddress" value="'+@post_url+'" />'
-  #     urls << '<input type="hidden" name="orderPage_sendMerchantURLPost" value="true" />'
-  #     urls << '<input type="hidden" name="orderPage_receiptResponseURL" value="'+@return_url+'" />'
-  #     urls << '<input type="hidden" name="orderPage_receiptLinkText" value="Return to Mind Body and Health" />'
-  #     urls
-  #   end
-    
-  #   def get_order_params(order_id,user_id,comments='')
-  #     str = '<input type="hidden" name="orderNumber" value="'+order_id.to_s+'" />'
-  #     str << '<input type="hidden" name="customerNumber" value="'+user_id.to_s+'" />'
-  #     str << '<input type="hidden" name="comments" value="'+comments+'" />'
-  #     str
-  #   end
-    
-  #   def get_customer_params(user)
-  #     str = '<input type="hidden" name="bill_to_email" value="'+user.email+'" />'
-  #     str << '<input type="hidden" name="bill_to_forename" value="'+user.first_name+'" />'
-  #     str << '<input type="hidden" name="bill_to_surname" value="'+user.last_name+'" />'
-  #   end
-    
-  #   def get_customer_address(user)
-  #     str = ''
-  #     if user.get_billing_address
-  #       address = user.get_billing_address
-  #       str = '<input type="hidden" name="billTo_street1" value="'+address.address+'" />'
-  #       str << '<input type="hidden" name="billTo_city" value="'+address.city+'" />'
-  #       str << '<input type="hidden" name="billTo_state" value="'+address.state+'" />'
-  #       str << '<input type="hidden" name="billTo_postalCode" value="'+address.zipcode+'" />'
-  #       str << '<input type="hidden" name="billTo_country" value="US" />'
-  #     end
-  #     str
-  #   end
   end
 end
