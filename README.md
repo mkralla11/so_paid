@@ -23,8 +23,8 @@ See examples folder for instructions and copy/pastable files. More will be added
 ## Currently supported payment vendors:
 
 1. cybersource
-    request field info and doc:
-    http://apps.cybersource.com/library/documentation/dev_guides/Secure_Acceptance_WM/Secure_Acceptance_WM.pdf
+  *  request field info and doc:
+      *  http://apps.cybersource.com/library/documentation/dev_guides/Secure_Acceptance_WM/Secure_Acceptance_WM.pdf
 2. no more yet...
 
 
@@ -32,7 +32,7 @@ See examples folder for instructions and copy/pastable files. More will be added
 
   Want to make this gem more awesome? Even though everything works, maybe you have some good ideas that you want incorporated, whether it be performance-wise, or extension-wise. Hense, the following list is for you to easily view and will be ammended for large ideas.
 
-  ## The List:
+### The List:
   1. Support for paypal.
   2. Support for stripe (wrapping the gem that already exists).
 
