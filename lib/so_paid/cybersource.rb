@@ -1,7 +1,7 @@
 #require 'HOP'
 
-module PayMe
-  class Cybersource < PayMe::Hop
+module SoPaid
+  class Cybersource < SoPaid::Hop
 
   
     @@pv_defaults = {

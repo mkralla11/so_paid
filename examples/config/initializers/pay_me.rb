@@ -1,4 +1,4 @@
-PayMe.configure do |config|
+SoPaid.configure do |config|
   config.add_payment_vendor 'cybersource', # Name of your payment vendor
                             :vendor_options=>{ 
                                     # The only options that need to be placed
@@ -11,8 +11,11 @@ PayMe.configure do |config|
                                     # you pass in at instantiation time.
 
                                     # NOTE: 'live' and 'test' hashes ALWAYS
-                                    # trumps any 'defaults' which are outside
+                                    # trump any 'defaults' which are outside
                                     # of both of those hashes
+                                    # you do not need to include live or test
+                                    # hash if you don't want, and just use the default
+                                    # outer hash
 
                                     :live=>{
                                       :secret_key=>"your_key",
@@ -36,7 +39,7 @@ PayMe.configure do |config|
                                     :currency=>"USD",
                                     :signed_date_time=>"",
                                     :unsigned_field_names=>[],
-                                    # IMPORTANT: if you want to add,
+                                    # IMPORTANT: if you want to add
                                     # any :unsigned_field_names, make sure
                                     # you add them to both within the
                                     # :unsigned_field_names array AND

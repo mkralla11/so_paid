@@ -1,4 +1,4 @@
-# PayMe
+# SoPaid
 
 A no-nonsense, fully configurable Rails credit card/payment vendor gem.
 
@@ -6,7 +6,7 @@ A no-nonsense, fully configurable Rails credit card/payment vendor gem.
 
 Add this line to your application's Gemfile:
 
-    gem 'pay_me'
+    gem 'so_paid'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install pay_me
+    $ gem install so_paid
 
 ## Usage
 

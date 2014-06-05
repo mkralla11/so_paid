@@ -7,8 +7,8 @@ class PaymentsController < ApplicationController
     # process the response how you see fit,
     # verify the transaction signature in the OrderProcessor class
     # you have defined to process the returning post request from vendor,
-    # use public methods available to you using PayMe.vendor,
-    # ex: PayMe.vendor(:cybersource).verify_transaction_signature(params)
+    # use public methods available to you using SoPaid.vendor,
+    # ex: SoPaid.vendor(:cybersource).verify_transaction_signature(params)
     @order_processor = OrderProcessor.new(params)
     @order_processor.process_transaction
     render :nothing=>true, :status=>:ok
@@ -23,8 +23,8 @@ class PaymentsController < ApplicationController
     if @order.save
       # specific payment vendor, ex: cybersource...
       #...or not if you only have one defined in config
-      #ex: @payment_vendor = PayMe.vendor(:cybersource).new(@order, {override_defaults_hash}, {override_config_defaults_hash})
-      @payment_vendor = PayMe.vendor.new(@order)
+      #ex: @payment_vendor = SoPaid.vendor(:cybersource).new(@order, {override_defaults_hash}, {override_config_defaults_hash})
+      @payment_vendor = SoPaid.vendor.new(@order)
     else
       flash[:error] = "Please fix all errors with your account and your order. If you are having trouble making a purchase, contact the administrator."
       redirect_back_or_default root_path

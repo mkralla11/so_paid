@@ -1,4 +1,4 @@
-module PayMe
+module SoPaid
   module Configuration
 
     mattr_accessor :vendors
@@ -9,7 +9,7 @@ module PayMe
     end
 
     def add_payment_vendor(name="cybersource", options={})
-      new_vendor = ("PayMe::" + name.classify).safe_constantize
+      new_vendor = ("SoPaid::" + name.classify).safe_constantize
       raise "Payment Vendor '#{name}' gem/plugin not supported." if new_vendor.blank?
       vo = options.delete(:vendor_options) || {}
       co = options.delete(:config_options) || {}

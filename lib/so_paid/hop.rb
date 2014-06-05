@@ -9,7 +9,7 @@ require 'hmac-sha2'
 require 'base64'
 
 
-module PayMe
+module SoPaid
   class Hop
     @@pv_defaults = {
 
@@ -62,7 +62,7 @@ module PayMe
     end
 
     def merge_defaults(modes=[], opts={}, default_opts={})
-        PayMe::Hop.merge_defaults(modes, opts, default_opts)
+        SoPaid::Hop.merge_defaults(modes, opts, default_opts)
     end
 
 
