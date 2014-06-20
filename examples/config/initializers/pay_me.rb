@@ -64,6 +64,7 @@ SoPaid.configure do |config|
                             # config options
                             # if mode 
                             :config_options=>{
+                              :use_post_url=>:iframe #:webmobile
                               :test_user_email=>"payment_tester@gmail.com",
                               :test_mode=>false
                             }

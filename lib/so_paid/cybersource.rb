@@ -6,8 +6,16 @@ module SoPaid
   
     @@pv_defaults = {
       :live=>{
+        :post_urls=>{
+          :webmobile=>"https://testsecureacceptance.cybersource.com/pay",
+          :iframe=>"https://testsecureacceptance.cybersource.com/embedded/pay" 
+        }
       },
       :test=>{
+        :post_urls=>{
+          :webmobile=>"https://secureacceptance.cybersource.com/pay",
+          :iframe=>"https://secureacceptance.cybersource.com/embedded/pay" 
+        }
       },
       :secret_key=>"",
       :profile_id=>"",
@@ -39,8 +47,7 @@ module SoPaid
     
     @@config_defaults = {
       # optional for gem
-      :test_mode=>false,
-      :test_user_email=>"payment_tester@gmail.com"
+      :use_post_url=>:iframe
     }
 
 
@@ -64,7 +71,7 @@ module SoPaid
     def hop_url(user_email)
       # test mode true or specific test email gets access to test page
       if test? or @config_options[:test_user_email] == @current_user_email
-        test_hop_url
+        @pv_order_params
       else
         live_hop_url
       end
@@ -74,14 +81,19 @@ module SoPaid
     private
 
 
+    def urls
+
+
+    end
 
 
 
     def set_pv_fields
+      @pv_order_params = {}
       if live?
-        @pv_order_params = @pv_options[:live].presence || @pv_options
+        pv_opts = @pv_options[:live].presence || @pv_options
       else
-        @pv_order_params = @pv_options[:test].presence || @pv_options
+        pv_opts = @pv_options[:test].presence || @pv_options
       end
 
       # we just set them above and are done with them
@@ -89,7 +101,13 @@ module SoPaid
       @pv_options.delete(:test)
       # merge pv_order_params on top of pv_options which is
       # the combination of the class defaults and the configuration file defaults
-      @pv_order_params = merge_defaults(nil, @pv_order_params, @pv_options)
+      @merged_pv_opts = merge_defaults(nil, pv_opts, @pv_options)
+      order_keys = @merged_pv_opts[:signed_field_names] + @merged_pv_opts[:unsigned_field_names]
+      
+      order_keys.each do |o_key|
+        @pv_order_params[o_key] = @merged_pv_opts[o_key]
+      end
+
     end
 
 
@@ -117,13 +135,13 @@ module SoPaid
 
     def sign_params
       data = []
-      @pv_options[:signed_field_names].each do |key|
+      @pv_order_params[:signed_field_names].each do |key|
         data << key.to_s + "=" + @pv_order_params[key].to_s
       end
-      @pv_options[:signed_field_names] = @pv_options[:signed_field_names].join(",")
+      @pv_order_params[:signed_field_names] = @pv_order_params[:signed_field_names].join(",")
       data = data.join(",")
 
-      encode_hop(data, @pv_order_params[:secret_key])
+      encode_hop(data, @merged_pv_opts[:secret_key])
     end
 
 
@@ -133,14 +151,6 @@ module SoPaid
 
     def live?
       !test?
-    end
-
-    def test_hop_url
-      "https://testsecureacceptance.cybersource.com/pay"
-    end
-
-    def live_hop_url
-      "https://secureacceptance.cybersource.com/pay"
     end
   end
 end
