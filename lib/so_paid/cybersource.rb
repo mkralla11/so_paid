@@ -68,25 +68,14 @@ module SoPaid
     end
 
 
-    def hop_url(user_email)
-      # test mode true or specific test email gets access to test page
-      if test? or @config_options[:test_user_email] == @current_user_email
-        @pv_order_params
-      else
-        live_hop_url
-      end
+    def hop_url(use_post_url=nil)
+      # test/live url has already been determined by test_mode or user_email
+      generate_params if @pv_order_params.blank?
+      @merged_pv_opts[:post_urls][ use_post_url.presence || @config_options[:use_post_url]]
     end
 
 
     private
-
-
-    def urls
-
-
-    end
-
-
 
     def set_pv_fields
       @pv_order_params = {}
@@ -146,7 +135,7 @@ module SoPaid
 
 
     def test?
-      @config_options[:test_mode]
+      @config_options[:test_mode] or @config_options[:test_user_email] == @current_user_email
     end
 
     def live?
