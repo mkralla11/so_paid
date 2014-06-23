@@ -5,13 +5,13 @@ module SoPaid
 
   
     @@pv_defaults = {
-      :live=>{
+      :test=>{
         :post_urls=>{
           :webmobile=>"https://testsecureacceptance.cybersource.com/pay",
           :iframe=>"https://testsecureacceptance.cybersource.com/embedded/pay" 
         }
       },
-      :test=>{
+      :live=>{
         :post_urls=>{
           :webmobile=>"https://secureacceptance.cybersource.com/pay",
           :iframe=>"https://secureacceptance.cybersource.com/embedded/pay" 
@@ -70,7 +70,6 @@ module SoPaid
 
     def hop_url(use_post_url=nil)
       # test/live url has already been determined by test_mode or user_email
-      generate_params if @pv_order_params.blank?
       @merged_pv_opts[:post_urls][ use_post_url.presence || @config_options[:use_post_url]]
     end
 
@@ -90,7 +89,7 @@ module SoPaid
       @pv_options.delete(:test)
       # merge pv_order_params on top of pv_options which is
       # the combination of the class defaults and the configuration file defaults
-      @merged_pv_opts = merge_defaults(nil, pv_opts, @pv_options)
+      @merged_pv_opts = merge_defaults(pv_opts, @pv_options)
       order_keys = @merged_pv_opts[:signed_field_names] + @merged_pv_opts[:unsigned_field_names]
       
       order_keys.each do |o_key|
@@ -135,7 +134,7 @@ module SoPaid
 
 
     def test?
-      @config_options[:test_mode] or @config_options[:test_user_email] == @current_user_email
+      @config_options[:test_mode] or (@config_options[:test_user_email].present? and @config_options[:test_user_email] == @current_user_email)
     end
 
     def live?

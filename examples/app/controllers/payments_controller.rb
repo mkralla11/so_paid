@@ -23,7 +23,7 @@ class PaymentsController < ApplicationController
     if @order.save
       # specific payment vendor, ex: cybersource...
       #...or not if you only have one defined in config
-      #ex: @payment_vendor = SoPaid.vendor(:cybersource).new(@order, {override_defaults_hash}, {override_config_defaults_hash})
+      #ex: @payment_vendor = SoPaid.vendor(:cybersource).new(@order, {override_order_defaults_hash}, {override_config_defaults_hash})
       @payment_vendor = SoPaid.vendor.new(@order)
     else
       flash[:error] = "Please fix all errors with your account and your order. If you are having trouble making a purchase, contact the administrator."

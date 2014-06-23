@@ -65,6 +65,10 @@ SoPaid.configure do |config|
                             # if mode 
                             :config_options=>{
                               :use_post_url=>:iframe #:webmobile
+                              # the purpose of the test_user_email
+                              # is to trump the test_mode set here
+                              # essentially forcing test_mode to true
+                              # for that user only
                               :test_user_email=>"payment_tester@gmail.com",
                               :test_mode=>false
                             }
