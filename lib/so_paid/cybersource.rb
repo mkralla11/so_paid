@@ -100,7 +100,7 @@ module SoPaid
 
 
     def set_order_specific_params
-      o_specific = { :amount=>"amount_cents", :reference_number=>"id", :transaction_uuid=>"uniq_app_order_id" }
+      o_specific = { :amount=>"cs_amount", :reference_number=>"cs_reference_number", :transaction_uuid=>"cs_transaction_uuid" }
       
       o_specific.each_pair do |key, method|
         if @pv_order_params[key].present?
