@@ -1,3 +1,6 @@
+<!-- you can call @payment_vendor.hop_url(:iframe) or other specific
+  option here at view-rendering-time, but test/live has already been
+  determined at this point based on test_user_email or test_mode -->
 <form  action="<%=@payment_vendor.hop_url%>" method="post" >
   <% @payment_vendor.generate_params.each_pair do |key, value| %>
     <input type="hidden" name="<%=key%>" value="<%=value%>" >

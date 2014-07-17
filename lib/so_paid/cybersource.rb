@@ -93,9 +93,9 @@ module SoPaid
       order_keys = @merged_pv_opts[:signed_field_names] + @merged_pv_opts[:unsigned_field_names]
       
       order_keys.each do |o_key|
-        @pv_order_params[o_key] = @merged_pv_opts[o_key]
+        value = @merged_pv_opts[o_key].is_a?(Array) ? @merged_pv_opts[o_key].join(",") : @merged_pv_opts[o_key]
+        @pv_order_params[o_key] = value
       end
-
     end
 
 
@@ -123,12 +123,10 @@ module SoPaid
 
     def sign_params
       data = []
-      @pv_order_params[:signed_field_names].each do |key|
+      @merged_pv_opts[:signed_field_names].each do |key|
         data << key.to_s + "=" + @pv_order_params[key].to_s
       end
-      @pv_order_params[:signed_field_names] = @pv_order_params[:signed_field_names].join(",")
       data = data.join(",")
-
       encode_hop(data, @merged_pv_opts[:secret_key])
     end
 
