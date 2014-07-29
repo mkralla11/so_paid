@@ -25,6 +25,8 @@ See examples folder for instructions and copy/pastable files. More will be added
 1. cybersource
   *  request field info and doc:
       *  http://apps.cybersource.com/library/documentation/dev_guides/Secure_Acceptance_WM/Secure_Acceptance_WM.pdf
+  *  Field Mapping Info (helpful when upgrading from Legacy Hop to Secure Acceptance):
+      *  http://www.cybersource.com/products_and_services/payment_security/secure_acceptance/installbase/resources/SecureAcceptance_API_Discovery.htm  
 2. no more yet...
 
 
