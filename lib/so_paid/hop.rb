@@ -40,7 +40,7 @@ module SoPaid
       Base64.encode64(mac.digest).gsub "\n", ''
     end
 
-    def self.verify_signature(data,signature, secret_key)
+    def self.verify_signature(data, signature, secret_key)
        pub_digest = encode_hop(data, secret_key)
        pub_digest.eql?(signature)
     end
