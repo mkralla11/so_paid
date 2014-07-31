@@ -31,6 +31,10 @@ module SoPaid
 
       :signed_field_names =>
         [
+          # used for determining if live, or test mode was used
+          # AFTER the response form cybersource has been made
+          # and we are verifying the request signature
+          :merchant_defined_data100,
           :profile_id, 
           :access_key, 
           :transaction_uuid, 
@@ -74,6 +78,20 @@ module SoPaid
     end
 
 
+    def self.verify_transaction_signature(message)
+      if message[:req_merchant_defined_data100].present? and message[:req_merchant_defined_data] == "test"
+        secret_key = get_secret_key_for(:test)
+      else
+        secret_key = get_secret_key_for(:live)
+      end
+
+      verify_signature(message[:signed_field_names], message[:signature], secret_key)
+    end
+
+    def self.get_secret_key_for(targ_env)
+      (@@pv_defaults[targ_env] and @@pv_defaults[targ_env][:secret_key]) || @pv_defaults[targ_env]
+    end
+
     private
 
     def set_pv_fields
@@ -90,6 +108,7 @@ module SoPaid
       # merge pv_order_params on top of pv_options which is
       # the combination of the class defaults and the configuration file defaults
       @merged_pv_opts = merge_defaults(pv_opts, @pv_options)
+      @merged_pv_opts[:merchant_defined_data100] = live? ? "live" : "test"
       order_keys = @merged_pv_opts[:signed_field_names] + @merged_pv_opts[:unsigned_field_names]
       
       order_keys.each do |o_key|
@@ -138,5 +157,6 @@ module SoPaid
     def live?
       !test?
     end
+
   end
 end
