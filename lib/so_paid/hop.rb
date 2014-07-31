@@ -30,6 +30,27 @@ module SoPaid
       return self
     end
   
+    def self.get_isotime
+      Time.now.utc.iso8601
+    end
+
+    def self.encode_hop(data, key)
+      mac = HMAC::SHA256.new(key)
+      mac.update data
+      Base64.encode64(mac.digest).gsub "\n", ''
+    end
+
+    def self.verify_signature(data,signature)
+       pub_digest = encode_hop(data, secret_key)
+       pub_digest.eql?(signature)
+    end
+    
+    def self.verify_transaction_signature(message)
+      verify_signature(message[:signed_field_names], message[:signature])
+    end
+
+    
+
 
     def initialize(order, pv_options={}, config_options={})
       @pv_order_params = {}.with_indifferent_access
@@ -42,26 +63,6 @@ module SoPaid
       return self
     end
 
-
-
-    def get_isotime
-      Time.now.utc.iso8601
-    end
-
-    def encode_hop(data, key)
-      mac = HMAC::SHA256.new(key)
-      mac.update data
-      Base64.encode64(mac.digest).gsub "\n", ''
-    end
-
-    def verify_signature(data,signature)
-       pub_digest = encode_hop(data, secret_key)
-       pub_digest.eql?(signature)
-    end
-    
-    def verify_transaction_signature(message)
-      verify_signature(message[:signed_field_names], message[:signature])
-    end
 
     def merge_defaults(opts={}, default_opts={})
         SoPaid::Hop.merge_defaults(opts, default_opts)

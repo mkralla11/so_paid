@@ -112,7 +112,7 @@ module SoPaid
         end
       end
 
-      @pv_order_params[:signed_date_time] = get_isotime if @pv_order_params[:signed_date_time].blank?
+      @pv_order_params[:signed_date_time] = self.class.get_isotime if @pv_order_params[:signed_date_time].blank?
     end
 
 
@@ -127,7 +127,7 @@ module SoPaid
         data << key.to_s + "=" + @pv_order_params[key].to_s
       end
       data = data.join(",")
-      encode_hop(data, @merged_pv_opts[:secret_key])
+      self.class.encode_hop(data, @merged_pv_opts[:secret_key])
     end
 
 
