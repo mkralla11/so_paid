@@ -89,7 +89,7 @@ module SoPaid
     end
 
     def self.get_secret_key_for(targ_env)
-      (@@pv_defaults[targ_env] and @@pv_defaults[targ_env][:secret_key]) || @@pv_defaults[targ_env]
+      (@@pv_defaults[targ_env] and @@pv_defaults[targ_env][:secret_key]) || @@pv_defaults[:secret_key]
     end
 
     private
