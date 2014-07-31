@@ -79,7 +79,7 @@ module SoPaid
 
 
     def self.verify_transaction_signature(message)
-      if message[:req_merchant_defined_data100].present? and message[:req_merchant_defined_data] == "test"
+      if message[:req_merchant_defined_data100].present? and message[:req_merchant_defined_data100] == "test"
         secret_key = get_secret_key_for(:test)
       else
         secret_key = get_secret_key_for(:live)

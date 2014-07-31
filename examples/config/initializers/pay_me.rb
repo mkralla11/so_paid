@@ -17,6 +17,12 @@ SoPaid.configure do |config|
                                     # hash if you don't want, and just use the default
                                     # outer hash
 
+                                    # ALSO: merchant_defined_data100
+                                    # is reserved for gem to determine
+                                    # which 'mode' was originally chosen
+                                    # before posting to cybersource
+                                    # upon reply verification sig.
+
                                     :live=>{
                                       :secret_key=>"your_key",
                                       :access_key=>"your_key"
