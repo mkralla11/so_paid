@@ -40,15 +40,6 @@ module SoPaid
       Base64.encode64(mac.digest).gsub "\n", ''
     end
 
-    def self.verify_signature(data, signature, secret_key)
-       pub_digest = encode_hop(data, secret_key)
-       pub_digest.eql?(signature)
-    end
-    
-    def self.verify_transaction_signature(message)
-      raise "verify_transaction_signature needs to be defined in child class"
-    end
-
 
     def initialize(order, pv_options={}, config_options={})
       @pv_order_params = {}.with_indifferent_access

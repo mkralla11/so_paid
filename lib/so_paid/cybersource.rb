@@ -78,14 +78,24 @@ module SoPaid
     end
 
 
-    def self.verify_transaction_signature(message)
-      if message[:req_merchant_defined_data100].present? and message[:req_merchant_defined_data100] == "test"
+    def self.verify_transaction_signature(params)
+      if params[:req_merchant_defined_data100].present? and params[:req_merchant_defined_data100] == "test"
         secret_key = get_secret_key_for(:test)
       else
         secret_key = get_secret_key_for(:live)
       end
+      pub_digest = sign_params(params[:signed_field_names], params, secret_key)
+      pub_digest.eql?(params[:signature].strip)
+    end
 
-      verify_signature(message[:signed_field_names], message[:signature], secret_key)
+    def self.sign_params(field_list, params, secret_key)
+      field_list = field_list.split(",") if field_list.is_a? String
+      data = []
+      field_list.each do |key|
+        data << key.to_s + "=" + params[key].to_s
+      end
+      data = data.join(",")
+      encode_hop(data, secret_key)
     end
 
     def self.get_secret_key_for(targ_env)
@@ -136,17 +146,7 @@ module SoPaid
 
 
     def set_signature
-      @pv_order_params[:signature] = sign_params
-    end
-
-
-    def sign_params
-      data = []
-      @merged_pv_opts[:signed_field_names].each do |key|
-        data << key.to_s + "=" + @pv_order_params[key].to_s
-      end
-      data = data.join(",")
-      self.class.encode_hop(data, @merged_pv_opts[:secret_key])
+      @pv_order_params[:signature] = self.class.sign_params(@merged_pv_opts[:signed_field_names], @pv_order_params, @merged_pv_opts[:secret_key])
     end
 
 
