@@ -47,7 +47,7 @@ module SoPaid
       @config_options = self.merge_defaults(config_options, @@config_defaults)
 
       @order = order
-      @current_user_email = @config_options[:current_user_email] || @config_options[:current_user].try(:email) || (@order.user.try(:email) if @order.respond_to?(:user))
+      @current_user_email = @config_options[:current_user_email] || @config_options[:current_user].try(:email) || ( @order.respond_to?(:user) and @order.user.try(:email))
       generate_params
       return self
     end
